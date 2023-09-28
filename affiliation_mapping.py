@@ -11,7 +11,7 @@ df = pd.DataFrame()
 if '.xlsx' in filename:
     df = pd.read_excel(filename)
 elif '.csv' in filename:
-    df = pd.read_csv(filename)
+    df = pd.read_csv(filename, sep=None)
 else:
     raise ValueError("Extension must be .xlsx or .csv")
 
@@ -35,9 +35,9 @@ math = ['comput', 'informat', 'comp\w* sci', 'math', 'comp.* sec.*', 'dig\w* hum
 # Fakultät für Physik
 phys = ['phys*(?![a-z])', 'physi[ck]', 'friedrich[-\s]hund', 'hund p', 'astrophys', 'complex systems']
 # Juristische Fakultät
-jur = ['law', 'polit', 'jur', 'derecho']
+jur = ['law', 'jur', 'derecho']
 # Sozialwissenschaftliche Fakultät
-soz = ['soc\w* sci', 'sozialw', 'erziehungsw', 'demokr', 'so[cz]iol']
+soz = ['soc\w* sci', 'sozialw', 'erziehungsw', 'demokr', 'so[cz]iol', 'polit']
 # Wirtschaftswissenschaftliche Fakultät
 bwl = ['econ', 'volkswirt', 'wirtsch', 'asian business', 'financ',
        'sieben 3', 'stat', '(?!agri)busin', 'stat\w* lear',
@@ -81,11 +81,11 @@ drittm = ['coll\w* res', 'sfb', 'sonderforsch']
 df_adress = df[['item_id', 'doi', 'family_name', 'given_name', 'address_full']].copy()
 
 df_adress.loc[df_adress['address_full'].str.contains('|'.join(drittm), case=False, regex=True),
-              ['fakultaet']] = 'Drittmittelprojekte' # am Anfang, sodass bei Mehrfachangabe Zuordnung zu Fak.
+              ['fakultaet']] = 'Drittmittelprojekte'
 df_adress.loc[df_adress['address_full'].str.contains('|'.join(dpz), case=False, regex=True),
-              ['fakultaet']] = 'Deutsches Primatenzentrum' # am Anfang, sodass bei Mehrfachangabe Zuordnung zu Fak.
+              ['fakultaet']] = 'Deutsches Primatenzentrum'
 df_adress.loc[df_adress['address_full'].str.contains('|'.join(cibreed), case=False, regex=True),
-              ['fakultaet']] = 'Center for Integrated Breeding Research' # am Anfang, sodass bei Mehrfachangabe Zuordnung zu Fak.
+              ['fakultaet']] = 'Center for Integrated Breeding Research'
 df_adress.loc[df_adress['address_full'].str.contains('|'.join(agrar), case=False, regex=True),
               ['fakultaet']] = 'Fakultät für Agrarwissenschaften'
 df_adress.loc[df_adress['address_full'].str.contains('|'.join(biol), case=False, regex=True),
